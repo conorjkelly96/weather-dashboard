@@ -57,9 +57,9 @@
 
     <main>
       <div>
-        <div class="field has-addons mx-4 my-4">
+        <div class="field has-addons m-5">
           <div class="control">
-            <input class="input" type="text" placeholder="Find a repository" />
+            <input class="input" type="text" placeholder="Find a city" />
           </div>
           <div class="control">
             <a class="button is-info"> Search </a>
@@ -67,40 +67,141 @@
         </div>
       </div>
 
-      <div class="mx-4 my-4">
-        <button class="button is-small is-warning">Manchester</button>
-        <button class="button is-small is-warning">Manchester</button>
-        <button class="button is-small is-warning">Manchester</button>
-        <button class="button is-small is-warning">Manchester</button>
-        <button class="button is-small is-warning">Manchester</button>
-        <button class="button is-small is-warning">Manchester</button>
+      <div class="is-flex-direction-column is-flex-wrap-wrap m-4">
+        <button class="button is-small is-warning m-1">Manchester</button>
+        <button class="button is-small is-warning m-1">Manchester</button>
+        <button class="button is-small is-warning m-1">Manchester</button>
+        <button class="button is-small is-warning m-1">Manchester</button>
+        <button class="button is-small is-warning m-1">Manchester</button>
+        <button class="button is-small is-warning m-1">Manchester</button>
       </div>
 
-      <div class="tile is-parent">
+      <!-- Current Weather Container -->
+      <div class="current-container tile is-parent">
         <div class="tile is-child box">
-          <p class="title">Birmingham, UK</p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-            semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum
-            volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi
-            maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis
-            semper odio felis ut quam.
-          </p>
-          <p>
-            Suspendisse varius ligula in molestie lacinia. Maecenas varius eget
-            ligula a sagittis. Pellentesque interdum, nisl nec interdum maximus,
-            augue diam porttitor lorem, et sollicitudin felis neque sit amet
-            erat. Maecenas imperdiet felis nisi, fringilla luctus felis
-            hendrerit sit amet. Aenean vitae gravida diam, finibus dignissim
-            turpis. Sed eget varius ligula, at volutpat tortor.
-          </p>
-          <p>
-            Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus
-            erat, vitae congue lectus dolor consequat libero. Donec leo ligula,
-            maximus et pellentesque sed, gravida a metus. Cras ullamcorper a
-            nunc ac porta. Aliquam ut aliquet lacus, quis faucibus libero.
-            Quisque non semper leo.
-          </p>
+          <p class="title">Today in Birmingham</p>
+          <div class="tile is-ancestor">
+            <div class="tile is-4 is-horizontal is-parent current-container">
+              <div class="tile is-child box m-5">
+                <ul>
+                  Temperature:
+                </ul>
+                <ul>
+                  Wind:
+                </ul>
+                <ul>
+                  Humidity:
+                </ul>
+                <ul>
+                  UV Index:
+                </ul>
+              </div>
+              <div class="tile is-child box m-5">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/128/890/890347.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forecast Weather -->
+      <div class="forecast-container">
+        <div class="tile is-ancestor">
+          <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+              <ul>
+                Temperatrue:
+              </ul>
+              <ul>
+                Wind:
+              </ul>
+              <ul>
+                Humidity:
+              </ul>
+              <ul>
+                UV Index:
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile is-ancestor">
+          <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+              <ul>
+                Temperatrue:
+              </ul>
+              <ul>
+                Wind:
+              </ul>
+              <ul>
+                Humidity:
+              </ul>
+              <ul>
+                UV Index:
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile is-ancestor">
+          <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+              <ul>
+                Temperatrue:
+              </ul>
+              <ul>
+                Wind:
+              </ul>
+              <ul>
+                Humidity:
+              </ul>
+              <ul>
+                UV Index:
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile is-ancestor">
+          <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+              <ul>
+                Temperatrue:
+              </ul>
+              <ul>
+                Wind:
+              </ul>
+              <ul>
+                Humidity:
+              </ul>
+              <ul>
+                UV Index:
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile is-ancestor">
+          <div class="tile is-4 is-vertical is-parent">
+            <div class="tile is-child box">
+              <ul>
+                Temperatrue:
+              </ul>
+              <ul>
+                Wind:
+              </ul>
+              <ul>
+                Humidity:
+              </ul>
+              <ul>
+                UV Index:
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </main>

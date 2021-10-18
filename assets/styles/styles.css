@@ -1,3 +1,16 @@
 * {
   box-sizing: border-box;
 }
+
+.current-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.forecast-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
