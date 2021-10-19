@@ -2,18 +2,18 @@
   box-sizing: border-box;
 }
 
-/* .current-container-parent {
+.current-container-parent {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   border: blue 5px solid;
-} */
+}
 
 .current-container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  border: blue 5px solid;
+  border: green 5px solid;
 }
 
 .forecast-container {
