@@ -22,40 +22,38 @@
     <title>Your One Stop Shop to Weather News Online</title>
   </head>
   <body>
-    <header>
-      <nav
-        class="navbar is-warning"
-        role="navigation"
-        aria-label="main navigation"
-      >
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <p class="navbar-item">The Weather Dashboard</p>
-          </div>
+    <header
+      class="navbar is-warning"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <p class="navbar-item">The Weather Dashboard</p>
+        </div>
 
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-danger">
-                  <strong>Clear History</strong>
-                </a>
-                <a
-                  class="button is-light"
-                  href="https://github.com/conorjkelly96"
-                >
-                  <span class="icon">
-                    <i class="fab fa-github"></i>
-                  </span>
-                  <span>GitHub</span>
-                </a>
-              </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-danger">
+                <strong>Clear History</strong>
+              </a>
+              <a
+                class="button is-light"
+                href="https://github.com/conorjkelly96"
+              >
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>GitHub</span>
+              </a>
             </div>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
 
-    <main>
+    <main class="main-container">
       <div>
         <div class="field has-addons m-5">
           <div class="control">
@@ -77,13 +75,11 @@
       </div>
 
       <!-- Current Weather Container -->
-      <div class="current-container tile is-parent">
+      <div class="current-container-parent tile is-parent">
         <div class="tile is-child box">
-          <p class="title">Today in Birmingham</p>
-          <div class="tile is-ancestor">
-            <div class="tile is-4 is-horizontal is-parent current-container">
-              <div class="tile is-child is-5 box m-5">
-                <ul>
+          <div class="tile is-child box">
+            <h2 class="title">Today in Birmingham</h2>
+            <ul>
                   Temperature:
                 </ul>
                 <ul>

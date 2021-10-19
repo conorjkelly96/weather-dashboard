@@ -2,15 +2,27 @@
   box-sizing: border-box;
 }
 
-.current-container {
+/* .current-container-parent {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  border: blue 5px solid;
+} */
+
+.current-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border: blue 5px solid;
 }
 
 .forecast-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  border: red 5px solid;
+}
+
+.main-container {
+  border: black 5px solid;
 }
