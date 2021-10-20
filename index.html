@@ -49,16 +49,24 @@
     </header>
 
     <main class="main-container">
-      <div>
-        <div class="field has-addons m-5">
-          <div class="control">
-            <input class="input" type="text" placeholder="Find a city" />
-          </div>
-          <div class="control">
-            <a class="button is-info"> Search </a>
-          </div>
+      <form id="search-form" class="field has-addons m-5">
+        <div class="control">
+          <input
+            class="input"
+            id="city-input"
+            type="text"
+            placeholder="Find a city"
+          />
         </div>
-      </div>
+        <div class="control">
+          <submit class="button is-info"> Search </submit>
+        </div>
+        <div class="clear-history-btn">
+          <a class="button is-danger">
+            <strong>Clear History</strong>
+          </a>
+        </div>
+      </form>
 
       <hr />
 
@@ -75,121 +83,9 @@
       <div
         class="current-container-parent tile is-parent"
         id="current-weather-container"
-      >
-        <div class="tile is-child box">
-          <h2 class="title">Birmingham | Wed 20 October</h2>
-          <ul>
-            Temperature:
-          </ul>
-          <ul>
-            Wind:
-          </ul>
-          <ul>
-            Humidity:
-          </ul>
-          <ul>
-            UV Index:
-          </ul>
-        </div>
-      </div>
-
+      ></div>
       <!-- Forecast Weather -->
-      <div class="forecast-container">
-        <div class="tile is-ancestor">
-          <div class="tile is-5 is-vertical is-parent">
-            <div class="tile is-child box">
-              <ul>
-                Temperature:
-              </ul>
-              <ul>
-                Wind:
-              </ul>
-              <ul>
-                Humidity:
-              </ul>
-              <ul>
-                UV Index:
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="tile is-ancestor">
-          <div class="tile is-5 is-vertical is-parent">
-            <div class="tile is-child box">
-              <ul>
-                Temperature:
-              </ul>
-              <ul>
-                Wind:
-              </ul>
-              <ul>
-                Humidity:
-              </ul>
-              <ul>
-                UV Index:
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="tile is-ancestor">
-          <div class="tile is-5 is-vertical is-parent">
-            <div class="tile is-child box">
-              <ul>
-                Temperature:
-              </ul>
-              <ul>
-                Wind:
-              </ul>
-              <ul>
-                Humidity:
-              </ul>
-              <ul>
-                UV Index:
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="tile is-ancestor">
-          <div class="tile is-5 is-vertical is-parent">
-            <div class="tile is-child box">
-              <ul>
-                Temperature:
-              </ul>
-              <ul>
-                Wind:
-              </ul>
-              <ul>
-                Humidity:
-              </ul>
-              <ul>
-                UV Index:
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="tile is-ancestor">
-          <div class="tile is-5 is-vertical is-parent">
-            <div class="tile is-child box">
-              <ul>
-                Temperature:
-              </ul>
-              <ul>
-                Wind:
-              </ul>
-              <ul>
-                Humidity:
-              </ul>
-              <ul>
-                UV Index:
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="forecast-container" id="forecast-container"></div>
     </main>
 
     <footer class="footer">
@@ -202,6 +98,12 @@
         </p>
       </div>
     </footer>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
       integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="

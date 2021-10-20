@@ -1,5 +1,5 @@
-const weatherCardsContainer = $("#weather-cards-container");
 const currentWeatherContainer = $("#current-weather-container");
+const forecastWeatherContainer = $("#forecast-container");
 
 const API_KEY = "708fa10260c22a09e8551c978be4e26d";
 
@@ -25,12 +25,14 @@ const getIconCode = function () {
 
 const getForecastData = function (forecastData) {
   const callback = function (each) {
+    console.log(each);
     return {
       date: getFormattedDate(each.dt),
       temperature: each.temp.max,
       wind: each.wind_speed,
       humidity: each.humidity,
       iconCode: each.weather[0].icon,
+      uvi: each.uvi,
     };
   };
 
@@ -75,7 +77,7 @@ const renderCurrentWeatherCard = function (currentData) {
   //     </div>`;
 
   const currentWeatherCard = `<div class="tile is-child box">
-        <h2 class="title">${currentData.name}| ${currentData.date} 
+        <h2 class="title">${currentData.name} ${currentData.date} 
         <img src="https://openweathermap.org/img/w/${currentData.iconCode}.png" />
         </h2>
         <ul>
@@ -98,20 +100,10 @@ const renderCurrentWeatherCard = function (currentData) {
 // constructing forecast cards
 const renderForecastWeatherCards = function (forecastData) {
   const constructForecastCard = function (each) {
-    return `<div class="card m-1 forecast-card">
-        <div class="card-body">
-        <h5 class="card-title">${each.date}</h5>
-        <p class="card-text">
-            <img src="https://openweathermap.org/img/w/${each.iconCode}.png" />
-        </p>
-        <p class="card-text">Temp: ${each.temperature}&deg;F</p>
-        <p class="card-text">Wind: ${each.wind} MPH</p>
-        <p class="card-text">Humidity: ${each.humidity}</p>
-        </div>
-    </div>` // bulma design
-    `        <div class="tile is-ancestor">
+    return `<div class="tile is-ancestor">
     <div class="tile is-5 is-vertical is-parent">
       <div class="tile is-child box">
+      <img src="https://openweathermap.org/img/w/${each.iconCode}.png" />
       <h5 class="card-title">${each.date}</h5>
         <ul>
           Temperature:${each.temperature}
@@ -132,29 +124,19 @@ const renderForecastWeatherCards = function (forecastData) {
 
   const forecastCards = forecastData.map(constructForecastCard).join("");
 
-  //   const forecastCardsContainer = `<div class="bg-white border">
-  //     <h3 class="p-3 text-center">5-Day Forecast:</h3>
+  //   const forecastCardsContainer = `<div class="forecast-container">
+  //     <h3 class="">5-Day Forecast:</h3>
   //     <div
-  //         class="m-3 d-flex flex-wrap justify-content-around"
+  //         class=""
   //         id=""
   //     >${forecastCards}</div>
   //     </div>`;
 
-  const forecastCardsContainer = `<div class="forecast-container">
-    <h3 class="">5-Day Forecast:</h3>
-    <div
-        class=""
-        id=""
-    >${forecastCards}</div>
-    </div>`;
-
-  weatherCardsContainer.append(forecastCardsContainer);
+  forecastWeatherContainer.append(forecastCards);
 };
 
 // constructing weather cards
 const renderWeatherCards = function (weatherData) {
-  //   console.log(weatherData);
-
   renderCurrentWeatherCard(weatherData.current);
 
   renderForecastWeatherCards(weatherData.forecast);
@@ -168,7 +150,7 @@ const handleSearch = async function (event) {
   if (cityName) {
     const weatherData = await getWeatherData(cityName);
 
-    weatherCardsContainer.empty();
+    currentWeatherContainer.empty();
 
     renderWeatherCards(weatherData);
 

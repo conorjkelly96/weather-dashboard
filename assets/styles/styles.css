@@ -18,10 +18,23 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border: red 5px solid;
   padding: 20px;
   margin: 20px;
 }
 
 .main-container {
+}
+
+.clear-history-btn {
+  padding-left: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border: black solid 1px;
+  padding: 0px;
+  margin: 0px;
 }
