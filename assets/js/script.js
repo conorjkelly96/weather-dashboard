@@ -124,14 +124,6 @@ const renderForecastWeatherCards = function (forecastData) {
 
   const forecastCards = forecastData.map(constructForecastCard).join("");
 
-  //   const forecastCardsContainer = `<div class="forecast-container">
-  //     <h3 class="">5-Day Forecast:</h3>
-  //     <div
-  //         class=""
-  //         id=""
-  //     >${forecastCards}</div>
-  //     </div>`;
-
   forecastWeatherContainer.append(forecastCards);
 };
 
@@ -151,6 +143,7 @@ const handleSearch = async function (event) {
     const weatherData = await getWeatherData(cityName);
 
     currentWeatherContainer.empty();
+    forecastWeatherContainer.empty();
 
     renderWeatherCards(weatherData);
 
