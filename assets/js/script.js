@@ -15,6 +15,33 @@ const getCurrentData = function (name, forecastData) {
   };
 };
 
+// add bulma.io
+const getUVIClassName = function (uvi) {
+  if (uvi >= 0 && uvi < 3) {
+    return "btn-success";
+  } else if (uvi >= 3 && uvi < 6) {
+    return "btn-warning";
+  } else if (uvi >= 6 && uvi < 8) {
+    return "btn-danger";
+  } else {
+    return "btn-dark";
+  }
+};
+
+const setCitiesInLS = function (cityName) {
+  // get cities from LS
+  const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
+
+  // if city does not exist
+  if (!cities.includes(cityName)) {
+    // insert cityName in cities
+    cities.push(cityName);
+
+    // set cities in LS
+    localStorage.setItem("recentCities", JSON.stringify(cities));
+  }
+};
+
 const getFormattedDate = function (unixTimestamp) {
   return moment.unix(unixTimestamp).format("ddd DD/MM/YYYY");
 };
@@ -63,19 +90,6 @@ const getWeatherData = async (cityName) => {
 };
 
 const renderCurrentWeatherCard = function (currentData) {
-  //   const currentWeatherCard = `<div class="card-body bg-white border mb-2">
-  //     <h2 class="card-title">
-  //         ${currentData.name} ${currentData.date}
-  //         <img src="https://openweathermap.org/img/w/${currentData.iconCode}.png" />
-  //     </h2>
-  //     <p class="card-text">Temp: ${currentData.temperature}&deg;F</p>
-  //     <p class="card-text">Wind: ${currentData.wind} MPH</p>
-  //     <p class="card-text">Humidity: ${currentData.humidity}%</p>
-  //     <p class="card-text">
-  //         UV index: <span class="btn btn-primary">${currentData.uvi}</span>
-  //     </p>
-  //     </div>`;
-
   const currentWeatherCard = `<div class="tile is-child box">
         <h2 class="title">${currentData.name} ${currentData.date} 
         <img src="https://openweathermap.org/img/w/${currentData.iconCode}.png" />
@@ -134,21 +148,59 @@ const renderWeatherCards = function (weatherData) {
   renderForecastWeatherCards(weatherData.forecast);
 };
 
+const renderWeatherInfo = async function (cityName) {
+  const weatherData = await getWeatherData(cityName);
+
+  currentWeatherContainer.empty();
+  forecastWeatherContainer.empty();
+
+  renderWeatherCards(weatherData);
+};
+
+const renderRecentCities = function () {
+  // get cities from LS
+  const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
+
+  const citiesContainer = $("#city-list");
+
+  citiesContainer.empty();
+
+  const constructAndAppendCity = function (city) {
+    const liEl = `<button data-city=${city} class="button is-info">${city}</button>`;
+    citiesContainer.append(liEl);
+  };
+
+  const handleClick = function (event) {
+    const target = $(event.target);
+
+    // if click is from li only
+    if (target.is("li")) {
+      // get city name
+      const cityName = target.data("city");
+
+      // render weather info with city name
+      renderWeatherInfo(cityName);
+    }
+  };
+
+  citiesContainer.on("click", handleClick);
+
+  cities.forEach(constructAndAppendCity);
+};
+
 const handleSearch = async function (event) {
   event.preventDefault();
 
   const cityName = $("#city-input").val();
 
   if (cityName) {
-    const weatherData = await getWeatherData(cityName);
+    renderWeatherInfo(cityName);
 
-    currentWeatherContainer.empty();
-    forecastWeatherContainer.empty();
+    setCitiesInLS(cityName);
 
-    renderWeatherCards(weatherData);
-
-    // save city to LS
+    renderRecentCities();
   }
 };
 
 $("#search-form").on("submit", handleSearch);
+$(document).ready(handleReady);
