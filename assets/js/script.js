@@ -174,7 +174,7 @@ const renderRecentCities = function () {
     const target = $(event.target);
 
     // if click is from li only
-    if (target.is("li")) {
+    if (target.is("button")) {
       // get city name
       const cityName = target.data("city");
 
