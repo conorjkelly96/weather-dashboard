@@ -22,9 +22,6 @@
   margin: 20px;
 }
 
-.main-container {
-}
-
 .clear-history-btn {
   padding-left: 10px;
 }
@@ -37,4 +34,13 @@
   border: black solid 1px;
   padding: 0px;
   margin: 0px;
+}
+
+.footer {
+  position: fixed;
+  height: 50px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
 }
