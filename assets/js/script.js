@@ -18,13 +18,13 @@ const getCurrentData = function (name, forecastData) {
 // add bulma.io
 const getUVIClassName = function (uvi) {
   if (uvi >= 0 && uvi < 3) {
-    return "btn-success";
+    return "button is-success";
   } else if (uvi >= 3 && uvi < 6) {
-    return "btn-warning";
+    return "button is-warning";
   } else if (uvi >= 6 && uvi < 8) {
-    return "btn-danger";
+    return "button is-danger";
   } else {
-    return "btn-dark";
+    return "button is-black";
   }
 };
 
@@ -92,7 +92,9 @@ const getWeatherData = async (cityName) => {
 const renderCurrentWeatherCard = function (currentData) {
   const currentWeatherCard = `<div class="tile is-child box">
         <h2 class="title">${currentData.name} ${currentData.date} 
-        <img src="https://openweathermap.org/img/w/${currentData.iconCode}.png" />
+        <img src="https://openweathermap.org/img/w/${
+          currentData.iconCode
+        }.png" />
         </h2>
         <ul>
         Temperature:${currentData.temperature}&deg;F
@@ -104,8 +106,9 @@ const renderCurrentWeatherCard = function (currentData) {
         Humidity:${currentData.humidity}%
         </ul>
         <ul>
-        UV Index:${currentData.uvi}
-        </ul>
+        UV index: <span class="${getUVIClassName(currentData.uvi)}">${
+    currentData.uvi
+  }</span></ul>
     </div>`;
 
   currentWeatherContainer.append(currentWeatherCard);
@@ -115,7 +118,7 @@ const renderCurrentWeatherCard = function (currentData) {
 const renderForecastWeatherCards = function (forecastData) {
   const constructForecastCard = function (each) {
     return `<div class="tile is-ancestor">
-    <div class="tile is-5 is-vertical is-parent">
+    <div class="tile is-vertical is-parent mx-3">
       <div class="tile is-child box">
       <img src="https://openweathermap.org/img/w/${each.iconCode}.png" />
       <h5 class="card-title">${each.date}</h5>
@@ -166,14 +169,14 @@ const renderRecentCities = function () {
   citiesContainer.empty();
 
   const constructAndAppendCity = function (city) {
-    const liEl = `<button data-city=${city} class="button is-info">${city}</button>`;
-    citiesContainer.append(liEl);
+    const searchEl = `<button data-city=${city} class="button is-info ml-3">${city}</button>`;
+    citiesContainer.append(searchEl);
   };
 
   const handleClick = function (event) {
     const target = $(event.target);
 
-    // if click is from li only
+    // if click is from button only
     if (target.is("button")) {
       // get city name
       const cityName = target.data("city");
