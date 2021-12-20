@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+      integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./assets/styles/styles.css" />
+    <title>Your One Stop Shop to Weather News Online</title>
+  </head>
+  <body>
+    <header
+      class="navbar is-warning"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <h1 class="navbar-item">The Weather Dashboard</h1>
+        </div>
+
+        <div class="navbar-end">
+          <div class="buttons">
+            <a class="button is-light" href="https://github.com/conorjkelly96">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <form id="search-form" class="field has-addons m-5">
+        <div class="control">
+          <input
+            class="input"
+            id="city-input"
+            type="text"
+            placeholder="Find a city"
+          />
+        </div>
+        <div class="control">
+          <button type="submit" class="button is-info">Search</button>
+        </div>
+        <div class="clear-history-btn">
+          <a class="button is-danger">
+            <strong>Clear History</strong>
+          </a>
+        </div>
+      </form>
+
+      <hr />
+
+      <div
+        class="is-flex-direction-column is-flex-wrap-wrap m-4"
+        id="city-list"
+      ></div>
+
+      <!-- Current Weather Container -->
+      <div
+        class="current-container-parent tile is-parent"
+        id="current-weather-container"
+      ></div>
+      <!-- Forecast Weather -->
+      <div class="forecast-container" id="forecast-container"></div>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Weather Dashboard</strong> by
+          <a href="https://www.linkedin.com/in/conor-kelly-984734149/"
+            >Conor Kelly</a
+          >.
+        </p>
+      </div>
+    </footer>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
