@@ -89,6 +89,7 @@ const getWeatherData = async (cityName) => {
   };
 };
 
+// ck
 const renderCurrentWeatherCard = function (currentData) {
   const currentWeatherCard = `<div class="tile is-child box">
         <h2 class="title">${currentData.name} ${currentData.date} 
