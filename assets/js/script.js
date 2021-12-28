@@ -1,9 +1,10 @@
 const currentWeatherContainer = $("#current-weather-container");
 const forecastWeatherContainer = $("#forecast-container");
+const clearHistoryBtn = $("clear-history-btn");
 
 const API_KEY = "708fa10260c22a09e8551c978be4e26d";
 
-const getCurrentData = function (name, forecastData) {
+const getCurrentData = (name, forecastData) {
   return {
     name: name,
     temperature: forecastData.current.temp,
@@ -16,7 +17,7 @@ const getCurrentData = function (name, forecastData) {
 };
 
 // add bulma.io
-const getUVIClassName = function (uvi) {
+const getUVIClassName = (uvi) => {
   if (uvi >= 0 && uvi < 3) {
     return "button is-success";
   } else if (uvi >= 3 && uvi < 6) {
@@ -28,7 +29,7 @@ const getUVIClassName = function (uvi) {
   }
 };
 
-const setCitiesInLS = function (cityName) {
+const setCitiesInLS = (cityName) => {
   // get cities from LS
   const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
 
@@ -42,7 +43,7 @@ const setCitiesInLS = function (cityName) {
   }
 };
 
-const getFormattedDate = function (unixTimestamp) {
+const getFormattedDate = (unixTimestamp) => {
   return moment.unix(unixTimestamp).format("ddd DD/MM/YYYY");
 };
 
@@ -50,7 +51,7 @@ const getIconCode = function () {
   return;
 };
 
-const getForecastData = function (forecastData) {
+const getForecastData = (forecastData) => {
   const callback = function (each) {
     console.log(each);
     return {
@@ -89,8 +90,7 @@ const getWeatherData = async (cityName) => {
   };
 };
 
-// ck
-const renderCurrentWeatherCard = function (currentData) {
+const renderCurrentWeatherCard = (currentData) => {
   const currentWeatherCard = `<div class="tile is-child box">
         <h2 class="title">${currentData.name} ${currentData.date} 
         <img src="https://openweathermap.org/img/w/${
@@ -116,7 +116,7 @@ const renderCurrentWeatherCard = function (currentData) {
 };
 
 // constructing forecast cards
-const renderForecastWeatherCards = function (forecastData) {
+const renderForecastWeatherCards = (forecastData) => {
   const constructForecastCard = function (each) {
     return `<div class="tile is-ancestor">
     <div class="tile is-vertical is-parent mx-3">
@@ -146,13 +146,13 @@ const renderForecastWeatherCards = function (forecastData) {
 };
 
 // constructing weather cards
-const renderWeatherCards = function (weatherData) {
+const renderWeatherCards = (weatherData) => {
   renderCurrentWeatherCard(weatherData.current);
 
   renderForecastWeatherCards(weatherData.forecast);
 };
 
-const renderWeatherInfo = async function (cityName) {
+const renderWeatherInfo = async (cityName) => {
   const weatherData = await getWeatherData(cityName);
 
   currentWeatherContainer.empty();
@@ -161,7 +161,7 @@ const renderWeatherInfo = async function (cityName) {
   renderWeatherCards(weatherData);
 };
 
-const renderRecentCities = function () {
+const renderRecentCities = () => {
   // get cities from LS
   const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
 
@@ -169,12 +169,12 @@ const renderRecentCities = function () {
 
   citiesContainer.empty();
 
-  const constructAndAppendCity = function (city) {
+  const constructAndAppendCity = (city) => {
     const searchEl = `<button data-city=${city} class="button is-info ml-3">${city}</button>`;
     citiesContainer.append(searchEl);
   };
 
-  const handleClick = function (event) {
+  const handleClick = (event) => {
     const target = $(event.target);
 
     // if click is from button only
@@ -192,7 +192,11 @@ const renderRecentCities = function () {
   cities.forEach(constructAndAppendCity);
 };
 
-const handleSearch = async function (event) {
+const deleteFromLocalStorage = () => {
+  // delete from local storage
+};
+
+const handleSearch = async (event) => {
   event.preventDefault();
 
   const cityName = $("#city-input").val();
