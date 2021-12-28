@@ -1,10 +1,11 @@
 const currentWeatherContainer = $("#current-weather-container");
 const forecastWeatherContainer = $("#forecast-container");
 const clearHistoryBtn = $("clear-history-btn");
+const clearHistoryDiv = $("#clear-history-div");
 
 const API_KEY = "708fa10260c22a09e8551c978be4e26d";
 
-const getCurrentData = (name, forecastData) {
+const getCurrentData = (name, forecastData) => {
   return {
     name: name,
     temperature: forecastData.current.temp,
@@ -53,7 +54,6 @@ const getIconCode = function () {
 
 const getForecastData = (forecastData) => {
   const callback = function (each) {
-    console.log(each);
     return {
       date: getFormattedDate(each.dt),
       temperature: each.temp.max,
@@ -192,9 +192,20 @@ const renderRecentCities = () => {
   cities.forEach(constructAndAppendCity);
 };
 
-const deleteFromLocalStorage = () => {
-  // delete from local storage
+const handleClickForDeleteLS = function (event) {
+  // target the clear history button
+  const target = $(event.target);
+
+  if (target.is("button")) {
+    console.log("target");
+    localStorage.clear();
+  }
+
+  // once the button is clicked, clear everything from local storage
+  // remove all the tags from the div
 };
+
+clearHistoryDiv.on("click", handleClickForDeleteLS);
 
 const handleSearch = async (event) => {
   event.preventDefault();
@@ -207,6 +218,20 @@ const handleSearch = async (event) => {
     setCitiesInLS(cityName);
 
     renderRecentCities();
+  }
+};
+
+const handleReady = () => {
+  // render recent cities
+  renderRecentCities();
+
+  // get cities from LS
+  const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
+
+  // if there are recent cities get the info for the most recent city
+  if (cities.length) {
+    const cityName = cities[cities.length - 1];
+    renderWeatherInfo(cityName);
   }
 };
 
