@@ -45,7 +45,11 @@ const setCitiesInLS = (cityName) => {
     cities.push(cityName);
 
     // set cities in LS
-    localStorage.setItem("recentCities", JSON.stringify(cities));
+    try {
+      localStorage.setItem("recentCities", JSON.stringify(cities));
+    } catch (error) {
+      console.log("ERR:", error.message);
+    }
   }
 };
 
@@ -72,27 +76,60 @@ const getForecastData = (forecastData) => {
   return forecastData.daily.slice(1, 6).map(callback);
 };
 
+// const getWeatherData = async (cityName) => {
+//   try {
+//     const currentDataUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
+//     const currentDataResponse = await fetch(currentDataUrl);
+//     const currentData = await currentDataResponse.json();
+
+//     const lat = currentData.coord.lat;
+//     const lon = currentData.coord.lon;
+//     const name = currentData.name;
+
+//     const forecastDataUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
+
+//     const forecastDataResponse = await fetch(forecastDataUrl);
+//     const forecastData = await forecastDataResponse.json();
+
+//     const current = getCurrentData(name, forecastData);
+//     const forecast = getForecastData(forecastData);
+
+//     return {
+//       current: current,
+//       forecast: forecast,
+//     };
+//   } catch (error) {
+//     console.log("ERR:", error.message);
+//   }
+// };
+
 const getWeatherData = async (cityName) => {
   const currentDataUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
   const currentDataResponse = await fetch(currentDataUrl);
-  const currentData = await currentDataResponse.json();
+  console.log(currentDataResponse.status);
 
-  const lat = currentData.coord.lat;
-  const lon = currentData.coord.lon;
-  const name = currentData.name;
+  if (currentDataResponse.status === 404) {
+    alert("Invalid city name, please try again");
+  } else {
+    const currentData = await currentDataResponse.json();
 
-  const forecastDataUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
+    const lat = currentData.coord.lat;
+    const lon = currentData.coord.lon;
+    const name = currentData.name;
 
-  const forecastDataResponse = await fetch(forecastDataUrl);
-  const forecastData = await forecastDataResponse.json();
+    const forecastDataUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
 
-  const current = getCurrentData(name, forecastData);
-  const forecast = getForecastData(forecastData);
+    const forecastDataResponse = await fetch(forecastDataUrl);
+    const forecastData = await forecastDataResponse.json();
 
-  return {
-    current: current,
-    forecast: forecast,
-  };
+    const current = getCurrentData(name, forecastData);
+    const forecast = getForecastData(forecastData);
+
+    return {
+      current: current,
+      forecast: forecast,
+    };
+  }
 };
 
 const renderCurrentWeatherCard = (currentData) => {
@@ -152,9 +189,12 @@ const renderForecastWeatherCards = (forecastData) => {
 
 // constructing weather cards
 const renderWeatherCards = (weatherData) => {
-  renderCurrentWeatherCard(weatherData.current);
-
-  renderForecastWeatherCards(weatherData.forecast);
+  try {
+    renderCurrentWeatherCard(weatherData.current);
+    renderForecastWeatherCards(weatherData.forecast);
+  } catch (error) {
+    console.log("ERR:", error.message);
+  }
 };
 
 const renderWeatherInfo = async (cityName) => {
@@ -215,7 +255,8 @@ clearHistoryDiv.on("click", handleClickForDeleteLS);
 const handleSearch = async (event) => {
   event.preventDefault();
 
-  const cityName = $("#city-input").val();
+  const userSearch = $("#city-input").val();
+  const cityName = capitalizeFirstLetter(userSearch);
 
   if (cityName) {
     renderWeatherInfo(cityName);
