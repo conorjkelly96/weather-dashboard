@@ -1,9 +1,12 @@
 const currentWeatherContainer = $("#current-weather-container");
 const forecastWeatherContainer = $("#forecast-container");
+const clearHistoryBtn = $("clear-history-btn");
+const clearHistoryDiv = $("#clear-history-div");
+const citiesContainer = $("#city-list");
 
 const API_KEY = "708fa10260c22a09e8551c978be4e26d";
 
-const getCurrentData = function (name, forecastData) {
+const getCurrentData = (name, forecastData) => {
   return {
     name: name,
     temperature: forecastData.current.temp,
@@ -16,7 +19,7 @@ const getCurrentData = function (name, forecastData) {
 };
 
 // add bulma.io
-const getUVIClassName = function (uvi) {
+const getUVIClassName = (uvi) => {
   if (uvi >= 0 && uvi < 3) {
     return "button is-success";
   } else if (uvi >= 3 && uvi < 6) {
@@ -28,7 +31,11 @@ const getUVIClassName = function (uvi) {
   }
 };
 
-const setCitiesInLS = function (cityName) {
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const setCitiesInLS = (cityName) => {
   // get cities from LS
   const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
 
@@ -38,11 +45,15 @@ const setCitiesInLS = function (cityName) {
     cities.push(cityName);
 
     // set cities in LS
-    localStorage.setItem("recentCities", JSON.stringify(cities));
+    try {
+      localStorage.setItem("recentCities", JSON.stringify(cities));
+    } catch (error) {
+      console.log("ERR:", error.message);
+    }
   }
 };
 
-const getFormattedDate = function (unixTimestamp) {
+const getFormattedDate = (unixTimestamp) => {
   return moment.unix(unixTimestamp).format("ddd DD/MM/YYYY");
 };
 
@@ -50,9 +61,8 @@ const getIconCode = function () {
   return;
 };
 
-const getForecastData = function (forecastData) {
+const getForecastData = (forecastData) => {
   const callback = function (each) {
-    console.log(each);
     return {
       date: getFormattedDate(each.dt),
       temperature: each.temp.max,
@@ -66,30 +76,63 @@ const getForecastData = function (forecastData) {
   return forecastData.daily.slice(1, 6).map(callback);
 };
 
+// const getWeatherData = async (cityName) => {
+//   try {
+//     const currentDataUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
+//     const currentDataResponse = await fetch(currentDataUrl);
+//     const currentData = await currentDataResponse.json();
+
+//     const lat = currentData.coord.lat;
+//     const lon = currentData.coord.lon;
+//     const name = currentData.name;
+
+//     const forecastDataUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
+
+//     const forecastDataResponse = await fetch(forecastDataUrl);
+//     const forecastData = await forecastDataResponse.json();
+
+//     const current = getCurrentData(name, forecastData);
+//     const forecast = getForecastData(forecastData);
+
+//     return {
+//       current: current,
+//       forecast: forecast,
+//     };
+//   } catch (error) {
+//     console.log("ERR:", error.message);
+//   }
+// };
+
 const getWeatherData = async (cityName) => {
   const currentDataUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
   const currentDataResponse = await fetch(currentDataUrl);
-  const currentData = await currentDataResponse.json();
+  console.log(currentDataResponse.status);
 
-  const lat = currentData.coord.lat;
-  const lon = currentData.coord.lon;
-  const name = currentData.name;
+  if (currentDataResponse.status === 404) {
+    alert("Invalid city name, please try again");
+  } else {
+    const currentData = await currentDataResponse.json();
 
-  const forecastDataUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
+    const lat = currentData.coord.lat;
+    const lon = currentData.coord.lon;
+    const name = currentData.name;
 
-  const forecastDataResponse = await fetch(forecastDataUrl);
-  const forecastData = await forecastDataResponse.json();
+    const forecastDataUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
 
-  const current = getCurrentData(name, forecastData);
-  const forecast = getForecastData(forecastData);
+    const forecastDataResponse = await fetch(forecastDataUrl);
+    const forecastData = await forecastDataResponse.json();
 
-  return {
-    current: current,
-    forecast: forecast,
-  };
+    const current = getCurrentData(name, forecastData);
+    const forecast = getForecastData(forecastData);
+
+    return {
+      current: current,
+      forecast: forecast,
+    };
+  }
 };
 
-const renderCurrentWeatherCard = function (currentData) {
+const renderCurrentWeatherCard = (currentData) => {
   const currentWeatherCard = `<div class="tile is-child box">
         <h2 class="title">${currentData.name} ${currentData.date} 
         <img src="https://openweathermap.org/img/w/${
@@ -115,7 +158,7 @@ const renderCurrentWeatherCard = function (currentData) {
 };
 
 // constructing forecast cards
-const renderForecastWeatherCards = function (forecastData) {
+const renderForecastWeatherCards = (forecastData) => {
   const constructForecastCard = function (each) {
     return `<div class="tile is-ancestor">
     <div class="tile is-vertical is-parent mx-3">
@@ -145,13 +188,16 @@ const renderForecastWeatherCards = function (forecastData) {
 };
 
 // constructing weather cards
-const renderWeatherCards = function (weatherData) {
-  renderCurrentWeatherCard(weatherData.current);
-
-  renderForecastWeatherCards(weatherData.forecast);
+const renderWeatherCards = (weatherData) => {
+  try {
+    renderCurrentWeatherCard(weatherData.current);
+    renderForecastWeatherCards(weatherData.forecast);
+  } catch (error) {
+    console.log("ERR:", error.message);
+  }
 };
 
-const renderWeatherInfo = async function (cityName) {
+const renderWeatherInfo = async (cityName) => {
   const weatherData = await getWeatherData(cityName);
 
   currentWeatherContainer.empty();
@@ -160,20 +206,18 @@ const renderWeatherInfo = async function (cityName) {
   renderWeatherCards(weatherData);
 };
 
-const renderRecentCities = function () {
+const renderRecentCities = () => {
   // get cities from LS
   const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
 
-  const citiesContainer = $("#city-list");
-
   citiesContainer.empty();
 
-  const constructAndAppendCity = function (city) {
+  const constructAndAppendCity = (city) => {
     const searchEl = `<button data-city=${city} class="button is-info ml-3">${city}</button>`;
     citiesContainer.append(searchEl);
   };
 
-  const handleClick = function (event) {
+  const handleClick = (event) => {
     const target = $(event.target);
 
     // if click is from button only
@@ -191,10 +235,28 @@ const renderRecentCities = function () {
   cities.forEach(constructAndAppendCity);
 };
 
-const handleSearch = async function (event) {
+const handleClickForDeleteLS = function (event) {
+  // target the clear history button
+  const target = $(event.target);
+
+  if (target.is("button")) {
+    localStorage.clear();
+    citiesContainer.remove();
+    forecastWeatherContainer.remove();
+    currentWeatherContainer.remove();
+  }
+
+  // once the button is clicked, clear everything from local storage
+  // remove all the tags from the div
+};
+
+clearHistoryDiv.on("click", handleClickForDeleteLS);
+
+const handleSearch = async (event) => {
   event.preventDefault();
 
-  const cityName = $("#city-input").val();
+  const userSearch = $("#city-input").val();
+  const cityName = capitalizeFirstLetter(userSearch);
 
   if (cityName) {
     renderWeatherInfo(cityName);
@@ -202,6 +264,20 @@ const handleSearch = async function (event) {
     setCitiesInLS(cityName);
 
     renderRecentCities();
+  }
+};
+
+const handleReady = () => {
+  // render recent cities
+  renderRecentCities();
+
+  // get cities from LS
+  const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
+
+  // if there are recent cities get the info for the most recent city
+  if (cities.length) {
+    const cityName = cities[cities.length - 1];
+    renderWeatherInfo(cityName);
   }
 };
 
