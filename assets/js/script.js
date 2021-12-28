@@ -31,6 +31,10 @@ const getUVIClassName = (uvi) => {
   }
 };
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const setCitiesInLS = (cityName) => {
   // get cities from LS
   const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
