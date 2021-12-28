@@ -2,6 +2,7 @@ const currentWeatherContainer = $("#current-weather-container");
 const forecastWeatherContainer = $("#forecast-container");
 const clearHistoryBtn = $("clear-history-btn");
 const clearHistoryDiv = $("#clear-history-div");
+const citiesContainer = $("#city-list");
 
 const API_KEY = "708fa10260c22a09e8551c978be4e26d";
 
@@ -165,8 +166,6 @@ const renderRecentCities = () => {
   // get cities from LS
   const cities = JSON.parse(localStorage.getItem("recentCities")) ?? [];
 
-  const citiesContainer = $("#city-list");
-
   citiesContainer.empty();
 
   const constructAndAppendCity = (city) => {
@@ -197,8 +196,10 @@ const handleClickForDeleteLS = function (event) {
   const target = $(event.target);
 
   if (target.is("button")) {
-    console.log("target");
     localStorage.clear();
+    citiesContainer.remove();
+    forecastWeatherContainer.remove();
+    currentWeatherContainer.remove();
   }
 
   // once the button is clicked, clear everything from local storage
